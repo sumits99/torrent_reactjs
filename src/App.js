@@ -57,7 +57,7 @@ class App extends Component {
   <div className="container text-center">
     <input style={{"font-weight":"bold","font-size":"25px"}} onChange={(e)=>{this.setState({search:e.target.value}); this.fetch()}} type="search" id="form1" className="form-control" />
       <button onClick={this.fetch} type="button" className="btn btn-primary">
-    <i className="fas fa-search">search</i>
+    <i style={{"font-weight":"bold","font-size":"25px"}} className="fas fa-search">search</i>
   </button>
   </div>
 
