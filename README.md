@@ -1,5 +1,5 @@
 
-![torrent app](/icon_snap.png)
+![torrent app](icon_snap.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
