@@ -1,5 +1,5 @@
 
-![torrent app](icon_snap.png)Cancel changes
+![torrent app](icon_snap.png)
 
 ## Install
 * git clone
