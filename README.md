@@ -2,9 +2,9 @@
 ![torrent app](icon_snap.png)
 
 ## Install
-* git clone
+* git clone url
 * cd project_dir
-* npm i
+* npm install
 * npm start
 
 
