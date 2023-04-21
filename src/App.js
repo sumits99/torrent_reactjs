@@ -27,18 +27,28 @@ class App extends Component {
       apitrack:"&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2850%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce",
       search:"",
       apiResponse:[],
-      outputtable: this.tabletemplate
+      outputtable: this.tabletemplate,
+      fqdn: ""
     }
+
 
     this.fetch = this.fetch.bind(this);
 
 
   }
 
+  componentDidMount() {
+    let pi_url = new URL(window.location.href)
+
+    this.setState({fqdn:pi_url.hostname});
+
+}
+
   async fetch() {
       let url=this.get_url(this.state.search)
+      let fqdn = this.state.fqdn
       return await api
-        .get("http://localhost:4000/?url="+url)
+        .get(`http://${fqdn}:4000/api?url=`+url)
         .then((response) => {
           this.setState({apiResponse:response.data})
           console.log("result", response.data);
@@ -73,7 +83,15 @@ class App extends Component {
       </tr>
     </thead>
     <tbody className="tableclass" style={{color:"white","font-weight":"bold","font-size":"25px", overflow: "auto", height: "100px"}}>
-    {this.state.apiResponse.map((item)=> {return <tr><td>{item.name}</td> <td><button onClick={() => {navigator.clipboard.writeText('magnet:?xt=urn:btih:'+item.info_hash+'&dn='+item.name+this.state.apitrack)}}>copy_magnet_link</button></td> <td>{item.seeders}</td> <td>{item.leechers}</td></tr> })}
+    {this.state.apiResponse.map((item)=> {return <tr><td>{item.name}</td> <td><button onClick={async () => {
+      let fqdn = this.state.fqdn
+  await api
+  .get(`http://${fqdn}:4000/add-torrent?magnetUrl=${encodeURIComponent('magnet:?xt=urn:btih:'+item.info_hash+'&dn='+item.name+this.state.apitrack)}`)
+        
+      navigator.clipboard.writeText('magnet:?xt=urn:btih:'+item.info_hash+'&dn='+item.name+this.state.apitrack)
+      
+      
+      }}>copy_magnet_link</button></td> <td>{item.seeders}</td> <td>{item.leechers}</td></tr> })}
     </tbody>
   </table>
   </div>
