@@ -73,8 +73,30 @@ class App extends Component {
       </tr>
     </thead>
     <tbody className="tableclass" style={{color:"white","font-weight":"bold","font-size":"25px", overflow: "auto", height: "100px"}}>
-    {this.state.apiResponse.map((item)=> {return <tr><td>{item.name}</td> <td><button onClick={() => {navigator.clipboard.writeText('magnet:?xt=urn:btih:'+item.info_hash+'&dn='+item.name+this.state.apitrack)}}>copy_magnet_link</button></td> <td>{item.seeders}</td> <td>{item.leechers}</td></tr> })}
+
+  
+    {this.state.apiResponse.map((item) => (
+  <tr key={item.info_hash}>
+    <td>{item.name}</td>
+    <td>
+      <a
+        href={`magnet:?xt=urn:btih:${item.info_hash}&dn=${item.name}${this.state.apitrack}`}
+
+      >
+        magnet
+      </a>
+    </td>
+    <td>{item.seeders}</td>
+    <td>{item.leechers}</td>
+  </tr>
+))}
+
+
+
     </tbody>
+
+    {/* {this.state.apiResponse.map((item)=> {return <tr><td>{item.name}</td> <td><button onClick={() => {navigator.clipboard.writeText('magnet:?xt=urn:btih:'+item.info_hash+'&dn='+item.name+this.state.apitrack)}}>copy_magnet_link</button></td> <td>{item.seeders}</td> <td>{item.leechers}</td></tr> })}
+    </tbody> */}
   </table>
   </div>
 </div>
